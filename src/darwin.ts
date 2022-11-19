@@ -2,7 +2,7 @@ import { existsSync } from "fs";
 import { homedir } from "os";
 import { join } from "path";
 
-function getSteamPath(): string {
+async function getSteamPath(): Promise<string> {
   // As far as I am aware MacOS only installs steam to ~/Library/Application Support/Steam
 
   const homeDir = homedir();

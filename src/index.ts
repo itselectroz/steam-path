@@ -71,10 +71,12 @@ export type GamePath = {
  * If steamPath isn't provided it will attempt to find it.
  *
  * @param { string } [steamPath] *Optional* Steam installation path.
- * @return { object } JSON object
+ * @return { Promise<LibraryFolders> } JSON object promise
  */
-export function getLibraryFolders(steamPath?: string): LibraryFolders {
-  if (!steamPath) steamPath = lib.getSteamPath();
+export async function getLibraryFolders(
+  steamPath?: string
+): Promise<LibraryFolders> {
+  if (!steamPath) steamPath = await lib.getSteamPath();
 
   const steamApps = join(steamPath, "steamapps");
   const libraryfoldersPath = join(steamApps, "libraryfolders.vdf");
@@ -96,12 +98,12 @@ export function getLibraryFolders(steamPath?: string): LibraryFolders {
 /**
  * Get Steam's installation path as well as any game library paths.
  *
- * @return { SteamPath } Steam path and library paths
+ * @return { Promise<SteamPath> } Steam path and library paths promise
  */
-export function getSteamPath(): SteamPath {
-  const steamPath = lib.getSteamPath();
+export async function getSteamPath(): Promise<SteamPath> {
+  const steamPath = await lib.getSteamPath();
 
-  const libfolders = getLibraryFolders(steamPath);
+  const libfolders = await getLibraryFolders(steamPath);
 
   const libs = Object.entries(libfolders.libraryfolders).map(
     ([_, { path }]) => path
@@ -117,10 +119,10 @@ export function getSteamPath(): SteamPath {
  * Get an app's manifest file.
  *
  * @param { number } appId game's appid
- * @return { AppManifest } game's manifest data
+ * @return { Promise<AppManifest> } game's manifest data promise
  */
-export function getAppManifest(appId: number): AppManifest {
-  const libfolders = getLibraryFolders().libraryfolders;
+export async function getAppManifest(appId: number): Promise<AppManifest> {
+  const libfolders = (await getLibraryFolders()).libraryfolders;
 
   const gameLib = Object.entries(libfolders)
     .filter(([_, { apps }]) => !!apps[appId])
@@ -154,10 +156,10 @@ export function getAppManifest(appId: number): AppManifest {
  * Get a Steam game's path from app id.
  *
  * @param { number } appId game's appid
- * @returns { GamePath } game path
+ * @returns { Promise<GamePath> } game path promise
  */
-export function getAppPath(appId: number): GamePath {
-  const manifest = getAppManifest(appId);
+export async function getAppPath(appId: number): Promise<GamePath> {
+  const manifest = await getAppManifest(appId);
 
   return {
     name: manifest.AppState.name,

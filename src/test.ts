@@ -1,4 +1,6 @@
-import { getAppManifest, getAppPath, getSteamPath } from ".";
+import { getAppPath, getSteamPath } from ".";
 
-console.log(getSteamPath());
-console.log(getAppPath(291550)); // Brawlhalla
+(async () => {
+  console.log(await getSteamPath());
+  console.log(await getAppPath(291550)); // Brawlhalla
+})();

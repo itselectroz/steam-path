@@ -1,22 +1,20 @@
 import { existsSync } from "fs";
-import { enumerateValuesSafe, HKEY } from "registry-js";
+import { promisified } from "regedit";
 
-function getSteamPath(): string {
-  // Windows requires querying registry, using registry-js for this
-  const KEY = HKEY.HKEY_LOCAL_MACHINE;
-  const SUBKEY = "SOFTWARE\\WOW6432Node\\Valve\\Steam";
-  const SUBKEY32 = "SOFTWARE\\Valve\\Steam";
+async function getSteamPath(): Promise<string> {
+  // Windows requires querying registry, using regedit (npm package) for this
+  const keys = await promisified.list([
+    "HKLM\\SOFTWARE\\WOW6432Node\\Valve\\Steam",
+    "HKLM\\SOFTWARE\\Valve\\Steam",
+  ]);
 
-  const paths = enumerateValuesSafe(KEY, SUBKEY)
-    .concat(enumerateValuesSafe(KEY, SUBKEY32))
-    .filter((v) => v.name == "InstallPath");
+  const entry = Object.values(keys)
+    .filter((v) => !!v.exists && v.keys.includes("InstallPath"))
+    .find((v) => !!v.values["InstallPath"]);
 
-  const pathEntry = paths.pop();
+  if (!entry) throw new Error("Windows: Unable to find steam install path");
 
-  if (!pathEntry || !pathEntry.data)
-    throw new Error("Windows: Unable to find steam install path");
-
-  const path = pathEntry.data.toString();
+  const path = entry.values["InstallPath"].value as string;
 
   if (!existsSync(path))
     throw new Error("Windows: Steam install path does not exist");

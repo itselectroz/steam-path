@@ -25,7 +25,12 @@ npm install steam-path
 ## Usage
 
 ```javascript
-import { getGamePath, getSteamPath } from "steam-path";
+import {
+  getGamePath,
+  getSteamPath,
+  getLibraryFolders,
+  getAppManifest,
+} from "steam-path";
 
 // or
 
@@ -34,14 +39,14 @@ import * as SteamPath from "steam-path";
 
 ## Documentation
 
-### `SteamPath.getGamePath(appId: number): GamePath`
+### `SteamPath.getGamePath(appId: number): Promise<GamePath>`
 
 > Get a Steam game's path from app id
 
 ```javascript
 const BRAWLHALLA_APPID = 291550;
 
-const path = SteamPath.getGamePath(BRAWLHALLA_APPID);
+const path = await SteamPath.getGamePath(BRAWLHALLA_APPID);
 
 > {
   name: "Brawlhalla",
@@ -49,12 +54,12 @@ const path = SteamPath.getGamePath(BRAWLHALLA_APPID);
 };
 ```
 
-### `SteamPath.getSteamPath(): SteamPath`
+### `SteamPath.getSteamPath(): Promise<SteamPath>`
 
 > Get Steam's installation path as well as any game library paths
 
 ```javascript
-const path = SteamPath.getSteamPath();
+const path = await SteamPath.getSteamPath();
 
 > {
   path: "/Users/<user>/Library/Application Support/Steam/",
@@ -65,13 +70,13 @@ const path = SteamPath.getSteamPath();
 };
 ```
 
-### `getLibraryFolders(steamPath?: string): LibraryFolders`
+### `getLibraryFolders(steamPath?: string): Promise<LibraryFolders>`
 
 > Parse libraryfolders.vdf and return contents.
 > If steamPath isn't provided it will attempt to find it.
 
 ```javascript
-const libary = SteamPath.getLibraryFolders();
+const libary = await SteamPath.getLibraryFolders();
 
 > {
   libraryfolders: {
@@ -101,14 +106,14 @@ const libary = SteamPath.getLibraryFolders();
 }
 ```
 
-### `getAppManifest(appId: number): AppManifest`
+### `getAppManifest(appId: number): Promise<AppManifest>`
 
 > Get an app's manifest file.
 
 ```javascript
 const TROVE_APPID = 304050;
 
-const manifest = SteamPath.getGamePath(TROVE_APPID);
+const manifest = await SteamPath.getGamePath(TROVE_APPID);
 
 > {
   AppState: {
