@@ -2,18 +2,6 @@
 
 **steam-path** is a module for locating the installation path of Steam and Steam games.
 
-This module is still a WIP:
-
-- [x] MacOS
-  - [x] getSteamPath
-  - [x] getGamePath
-- [ ] Windows
-  - [ ] getSteamPath
-  - [ ] getGamePath
-- [ ] Linux
-  - [ ] getSteamPath
-  - [ ] getGamePath
-
 ## Installation
 
 You can install **steam-path** through the command line using `npm` or `yarn`.
