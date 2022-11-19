@@ -28,6 +28,7 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "@node-steam/vdf": "^2.2.0"
+    "@node-steam/vdf": "^2.2.0",
+    "registry-js": "^1.15.1"
   }
 }

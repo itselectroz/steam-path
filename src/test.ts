@@ -1,3 +1,4 @@
 import { getAppManifest, getAppPath, getSteamPath } from ".";
 
-console.log(getAppPath(304050)); // Trove
+console.log(getSteamPath());
+console.log(getAppPath(291550)); // Brawlhalla
