@@ -6,6 +6,8 @@ async function getSteamPath(): Promise<string> {
   const keys = await promisified.list([
     "HKLM\\SOFTWARE\\WOW6432Node\\Valve\\Steam",
     "HKLM\\SOFTWARE\\Valve\\Steam",
+    "HKCU\\SOFTWARE\\WOW6432Node\\Valve\\Steam",
+    "HKCU\\SOFTWARE\\Valve\\Steam",
   ]);
 
   const entry = Object.values(keys)
