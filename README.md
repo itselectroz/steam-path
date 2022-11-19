@@ -1,4 +1,7 @@
 # steam-path
+[![Version](https://img.shields.io/npm/v/steam-path.svg?style=flat-square)](https://www.npmjs.com/package/steam-path)
+[![Downloads](https://img.shields.io/npm/dt/steam-path.svg?style=flat-square)](https://www.npmjs.com/package/steam-path)
+[![License](https://img.shields.io/github/license/node-steam/vdf.svg?style=flat-square)](https://www.npmjs.com/package/steam-path)
 
 **steam-path** is a module for locating the installation path of Steam and Steam games.
 
