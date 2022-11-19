@@ -1,7 +1,8 @@
 # steam-path
+
 [![Version](https://img.shields.io/npm/v/steam-path.svg?style=flat-square)](https://www.npmjs.com/package/steam-path)
 [![Downloads](https://img.shields.io/npm/dt/steam-path.svg?style=flat-square)](https://www.npmjs.com/package/steam-path)
-[![License](https://img.shields.io/github/license/steam-path.svg?style=flat-square)](https://www.npmjs.com/package/steam-path)
+[![License](https://img.shields.io/github/license/itselectroz/steam-path)](https://www.npmjs.com/package/steam-path)
 
 **steam-path** is a module for locating the installation path of Steam and Steam apps.
 
@@ -167,4 +168,4 @@ Any scripts used to user test functionality can be found in `src/test.ts`.
 
 ## License
 
-All code in this repository is licensed under [MIT](LICENSE).
+All code in this repository is licensed under [GPL-3.0](LICENSE).
