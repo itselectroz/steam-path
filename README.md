@@ -4,9 +4,9 @@
 
 This module is still a WIP:
 
-- [ ] MacOS
+- [x] MacOS
   - [x] getSteamPath
-  - [ ] getGamePath
+  - [x] getGamePath
 - [ ] Windows
   - [ ] getSteamPath
   - [ ] getGamePath
@@ -98,6 +98,48 @@ const libary = SteamPath.getLibraryFolders();
       }
     },
   }
+}
+```
+
+### `getAppManifest(appId: number): AppManifest`
+
+> Get an app's manifest file.
+
+```javascript
+const TROVE_APPID = 304050;
+
+const manifest = SteamPath.getGamePath(TROVE_APPID);
+
+> {
+  AppState: {
+    appid: 304050,
+    Universe: 1,
+    name: 'Trove',
+    StateFlags: 4,
+    installdir: 'Trove',
+    LastUpdated: 1654701681,
+    SizeOnDisk: 1621558789,
+    StagingSize: 0,
+    buildid: 8642809,
+    LastOwner: 123456789,
+    UpdateResult: 2,
+    BytesToDownload: 934495216,
+    BytesDownloaded: 934495216,
+    BytesToStage: 1621558789,
+    BytesStaged: 1621558789,
+    TargetBuildID: 8642809,
+    AutoUpdateBehavior: 0,
+    AllowOtherDownloadsWhileRunning: 0,
+    ScheduledAutoUpdate: 0,
+    InstalledDepots: {
+      '304052': { manifest: 8702402695142410000, size: 1505721654 },
+      '845241': { manifest: 3390199620801870300, size: 115837135 }
+    },
+    InstallScripts: { '304052': 'installscript.vdf' },
+    UserConfig: { language: 'english' },
+    MountedConfig: { language: 'english' }
+  },
+  library_path: '/<path>/Steam/steamapps'
 }
 ```
 

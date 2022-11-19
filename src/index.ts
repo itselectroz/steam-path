@@ -20,9 +20,50 @@ export type LibraryFolders = {
   };
 };
 
+export type AppManifest = {
+  library_path: string;
+  AppState: {
+    appid: number;
+    Universe: number;
+    name: string;
+    StateFlags: number;
+    installdir: string;
+    LastUpdated: number;
+    SizeOnDisk: number;
+    StagingSize: number;
+    buildid: number;
+    LastOwner: number;
+    UpdateResult: number;
+    BytesToDownload: number;
+    BytesDownloaded: number;
+    BytesToStage: number;
+    BytesStaged: number;
+    TargetBuildID: number;
+    AutoUpdateBehavior: number;
+    AllowOtherDownloadsWhileRunning: number;
+    ScheduledAutoUpdate: number;
+    InstalledDepots: {
+      [depot: string]: {
+        manifest: number;
+        size: number;
+      };
+    };
+    InstallScripts: {
+      [appid: string]: string;
+    };
+    UserConfig: { language: string };
+    MountedConfig: { language: string };
+  };
+};
+
 export type SteamPath = {
   path: string;
   libs: string[];
+};
+
+export type GamePath = {
+  name: string;
+  path: string;
 };
 
 /**
@@ -53,7 +94,7 @@ export function getLibraryFolders(steamPath?: string): LibraryFolders {
 }
 
 /**
- * Get the Steam installation path.
+ * Get Steam's installation path as well as any game library paths.
  *
  * @return { SteamPath } Steam path and library paths
  */
@@ -69,5 +110,57 @@ export function getSteamPath(): SteamPath {
   return {
     path: steamPath,
     libs,
+  };
+}
+
+/**
+ * Get an app's manifest file.
+ *
+ * @param { number } appId game's appid
+ * @return { AppManifest } game's manifest data
+ */
+export function getAppManifest(appId: number): AppManifest {
+  const libfolders = getLibraryFolders().libraryfolders;
+
+  const gameLib = Object.entries(libfolders)
+    .filter(([_, { apps }]) => !!apps[appId])
+    .map(([_, { path }]) => join(path, "steamapps"));
+
+  const manifests = gameLib
+    .map((path) => {
+      const manifestPath = join(path, `appmanifest_${appId}.acf`);
+      if (!existsSync(manifestPath)) return false;
+
+      const manifest: AppManifest = parse(
+        readFileSync(manifestPath, {
+          encoding: "utf-8",
+        })
+      );
+
+      if (!manifest) return false;
+
+      manifest.library_path = path;
+      return manifest;
+    })
+    .filter((v) => !!v) as AppManifest[];
+
+  if (!manifests.length) throw new Error("Unable to find or parse appmanifest");
+
+  // Typescript is unable to see that pop cannot return undefined here.
+  return manifests.pop() as AppManifest;
+}
+
+/**
+ * Get a Steam game's path from app id.
+ *
+ * @param { number } appId game's appid
+ * @returns { GamePath } game path
+ */
+export function getAppPath(appId: number): GamePath {
+  const manifest = getAppManifest(appId);
+
+  return {
+    name: manifest.AppState.name,
+    path: join(manifest.library_path, "common", manifest.AppState.installdir),
   };
 }

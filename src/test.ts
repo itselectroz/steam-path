@@ -1,3 +1,3 @@
-import { getSteamPath } from ".";
+import { getAppManifest, getAppPath, getSteamPath } from ".";
 
-console.log(getSteamPath());
+console.log(getAppPath(304050)); // Trove
