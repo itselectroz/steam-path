@@ -10,13 +10,14 @@ async function getSteamPath(): Promise<string> {
     "HKCU\\SOFTWARE\\Valve\\Steam",
   ]);
 
-  const entry = Object.values(keys)
-    .filter((v) => !!v.exists && v.keys.includes("InstallPath"))
-    .find((v) => !!v.values["InstallPath"]);
+  const entry = Object.values(keys).find(
+    (v) => !!v.exists && (!!v.values["InstallPath"] || !!v.values["SteamPath"])
+  );
 
   if (!entry) throw new Error("Windows: Unable to find steam install path");
 
-  const path = entry.values["InstallPath"].value as string;
+  const path = (entry.values["InstallPath"] || entry.values["SteamPath"])
+    .value as string;
 
   if (!existsSync(path))
     throw new Error("Windows: Steam install path does not exist");
