@@ -3,7 +3,7 @@
 [![Downloads](https://img.shields.io/npm/dt/steam-path.svg?style=flat-square)](https://www.npmjs.com/package/steam-path)
 [![License](https://img.shields.io/github/license/node-steam/vdf.svg?style=flat-square)](https://www.npmjs.com/package/steam-path)
 
-**steam-path** is a module for locating the installation path of Steam and Steam games.
+**steam-path** is a module for locating the installation path of Steam and Steam apps.
 
 ## Installation
 
@@ -17,7 +17,7 @@ npm install steam-path
 
 ```javascript
 import {
-  getGamePath,
+  getAppPath,
   getSteamPath,
   getLibraryFolders,
   getAppManifest,
@@ -30,14 +30,14 @@ import * as SteamPath from "steam-path";
 
 ## Documentation
 
-### `SteamPath.getGamePath(appId: number): Promise<GamePath>`
+### `SteamPath.getAppPath(appId: number): Promise<AppPath>`
 
-> Get a Steam game's path from app id
+> Get a Steam app's path from app id
 
 ```javascript
 const BRAWLHALLA_APPID = 291550;
 
-const path = await SteamPath.getGamePath(BRAWLHALLA_APPID);
+const path = await SteamPath.getAppPath(BRAWLHALLA_APPID);
 
 > {
   name: "Brawlhalla",
@@ -47,7 +47,7 @@ const path = await SteamPath.getGamePath(BRAWLHALLA_APPID);
 
 ### `SteamPath.getSteamPath(): Promise<SteamPath>`
 
-> Get Steam's installation path as well as any game library paths
+> Get Steam's installation path as well as any app library paths
 
 ```javascript
 const path = await SteamPath.getSteamPath();
@@ -104,7 +104,7 @@ const libary = await SteamPath.getLibraryFolders();
 ```javascript
 const TROVE_APPID = 304050;
 
-const manifest = await SteamPath.getGamePath(TROVE_APPID);
+const manifest = await SteamPath.getAppManifest(TROVE_APPID);
 
 > {
   AppState: {

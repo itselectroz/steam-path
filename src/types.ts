@@ -55,7 +55,7 @@ export type SteamPath = {
   libs: string[];
 };
 
-export type GamePath = {
+export type AppPath = {
   name: string;
   path: string;
 };

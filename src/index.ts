@@ -2,7 +2,7 @@ import { parse } from "@node-steam/vdf";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
-import { AppManifest, GamePath, LibraryFolders, SteamPath } from "./types";
+import { AppManifest, AppPath, LibraryFolders, SteamPath } from "./types";
 import lib from "./util";
 
 /**
@@ -35,7 +35,7 @@ export async function getLibraryFolders(
 }
 
 /**
- * Get Steam's installation path as well as any game library paths.
+ * Get Steam's installation path as well as any app library paths.
  *
  * @return { Promise<SteamPath> } Steam path and library paths promise
  */
@@ -57,17 +57,17 @@ export async function getSteamPath(): Promise<SteamPath> {
 /**
  * Get an app's manifest file.
  *
- * @param { number } appId game's appid
- * @return { Promise<AppManifest> } game's manifest data promise
+ * @param { number } appId app's id
+ * @return { Promise<AppManifest> } app's manifest data promise
  */
 export async function getAppManifest(appId: number): Promise<AppManifest> {
   const libfolders = (await getLibraryFolders()).libraryfolders;
 
-  const gameLib = Object.entries(libfolders)
+  const appLib = Object.entries(libfolders)
     .filter(([_, { apps }]) => !!apps[appId])
     .map(([_, { path }]) => join(path, "steamapps"));
 
-  const manifests = gameLib
+  const manifests = appLib
     .map((path) => {
       const manifestPath = join(path, `appmanifest_${appId}.acf`);
       if (!existsSync(manifestPath)) return false;
@@ -92,12 +92,12 @@ export async function getAppManifest(appId: number): Promise<AppManifest> {
 }
 
 /**
- * Get a Steam game's path from app id.
+ * Get a Steam app's path from app id.
  *
- * @param { number } appId game's appid
- * @returns { Promise<GamePath> } game path promise
+ * @param { number } appId app's id
+ * @returns { Promise<AppPath> } app path promise
  */
-export async function getAppPath(appId: number): Promise<GamePath> {
+export async function getAppPath(appId: number): Promise<AppPath> {
   const manifest = await getAppManifest(appId);
 
   return {
