@@ -1,6 +1,6 @@
 {
   "name": "steam-path",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Typescript library for fetching Steam paths independent of operating system.",
   "main": "dist/index.js",
   "scripts": {
