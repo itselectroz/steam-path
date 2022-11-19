@@ -1,0 +1,30 @@
+{
+  "name": "steam-path",
+  "version": "1.0.0",
+  "description": "Typescript library for fetching Steam paths independent of operating system.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "node dist/test.js",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itselectroz/steam-path.git"
+  },
+  "keywords": [
+    "steam",
+    "typescript"
+  ],
+  "author": "Harry Whittle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itselectroz/steam-path/issues"
+  },
+  "homepage": "https://github.com/itselectroz/steam-path#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "typescript": "^4.9.3"
+  }
+}
