@@ -5,7 +5,7 @@
 This module is still a WIP:
 
 - [ ] MacOS
-  - [ ] getSteamPath
+  - [x] getSteamPath
   - [ ] getGamePath
 - [ ] Windows
   - [ ] getSteamPath
@@ -34,7 +34,7 @@ import * as SteamPath from "steam-path";
 
 ## Documentation
 
-### `SteamPath.getGamePath(appId: number)`
+### `SteamPath.getGamePath(appId: number): GamePath`
 
 > Get a Steam game's path from app id
 
@@ -42,8 +42,6 @@ import * as SteamPath from "steam-path";
 const BRAWLHALLA_APPID = 291550;
 
 const path = SteamPath.getGamePath(BRAWLHALLA_APPID);
-// or
-const path = getGamePath(BRAWLHALLA_APPID);
 
 > {
   name: "Brawlhalla",
@@ -51,14 +49,12 @@ const path = getGamePath(BRAWLHALLA_APPID);
 };
 ```
 
-### `SteamPath.getSteamPath()`
+### `SteamPath.getSteamPath(): SteamPath`
 
 > Get Steam's installation path as well as any game library paths
 
 ```javascript
 const path = SteamPath.getSteamPath();
-// or
-const path = getSteamPath();
 
 > {
   path: "/Users/<user>/Library/Application Support/Steam/",
@@ -67,6 +63,42 @@ const path = getSteamPath();
     "/Volumes/Drive01/SteamLibrary/"
   ]
 };
+```
+
+### `getLibraryFolders(steamPath?: string): LibraryFolders`
+
+> Parse libraryfolders.vdf and return contents.
+> If steamPath isn't provided it will attempt to find it.
+
+```javascript
+const libary = SteamPath.getLibraryFolders();
+
+> {
+  libraryfolders: {
+    '0': {
+      path: '<path>/Steam',
+      label: '',
+      contentid: 0123456789123456789,
+      totalsize: 0,
+      update_clean_bytes_tally: 01234567891,
+      time_last_update_corruption: 0,
+      apps: {
+        "291550": "897667634"
+      }
+    },
+    '1': {
+      path: '/Volumes/Drive01/SteamLibrary',
+      label: '',
+      contentid: 0123456789123456789,
+      totalsize: 0,
+      update_clean_bytes_tally: 01234567891,
+      time_last_update_corruption: 0,
+      apps: {
+        "570": "47537797371"
+      }
+    },
+  }
+}
 ```
 
 ## Contributing

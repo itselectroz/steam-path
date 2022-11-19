@@ -46,3 +46,7 @@ provide as much detail, context and reasoning as possible.
 Good pull requests - patches, improvements, new features - are helpful. They should remain focused in scope and avoid containing unrelated commits.
 
 Please ask first before embarking on any significant pull request (e.g. implementing features, refactoring code), otherwise you risk spending a lot of time working on something that the project’s developers might not want to merge into the project. The easiest way to do so is creating a feature request first and ensuring it isn't already being worked on.
+
+## Formatting
+
+We use [prettier](https://prettier.io/) for code formatting. A configuration file is already in the repository, please use this when working on the repo.
